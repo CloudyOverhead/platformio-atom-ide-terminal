@@ -3,6 +3,7 @@
 
 PlatformIOTerminalView = require './view'
 StatusIcon = require './status-icon'
+SelectCustomView = require './select-custom'
 
 os = require 'os'
 path = require 'path'
@@ -26,6 +27,7 @@ class StatusBar extends View
     @subscriptions.add atom.commands.add 'atom-workspace',
       'platformio-ide-terminal:focus': => @focusTerminal()
       'platformio-ide-terminal:new': => @newTerminalView()
+      'platformio-ide-terminal:new-custom-terminal': => @newCustomView()
       'platformio-ide-terminal:toggle': => @toggle()
       'platformio-ide-terminal:next': =>
         return unless @activeTerminal
@@ -291,6 +293,17 @@ class StatusBar extends View
     return if @activeTerminal?.animating
 
     @activeTerminal = @createTerminalView()
+    @activeTerminal.toggle()
+
+  newCustomView: ->
+    return if @activeTerminal?.animating
+
+    view = @selectCustomView()
+    return if view?
+
+    @activeTerminal = @createTerminalView(view.commands)
+    @activeTerminal = @setStatusColor(view.color)
+    @activeTerminal = @activeTerminal.statusIcon.updateName view.name.trim()
     @activeTerminal.toggle()
 
   attach: ->
