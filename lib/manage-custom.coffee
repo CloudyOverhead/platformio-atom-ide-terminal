@@ -48,7 +48,18 @@ class ManageCustomDialog extends View
 class CustomSelectList extends SelectListView
   initialize: (@parentView) ->
 
-  viewForItem: (item) -> "<li>#{item}</li>"
+  viewForItem: (item) ->
+    icon = @icon(item.color)
+    commands = "<li>" + item.commands.join("</li><li>") + "</li>"
+    """
+    <li>
+      #{icon} #{item.name} <br>
+      Commands ran on initialization:
+      <ul>
+        #{commands}
+      </ul>
+    <li>
+    """
 
   confirmed: (item) -> @parentView.confirm(item)
 
