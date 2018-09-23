@@ -51,3 +51,9 @@ class CustomSelectList extends SelectListView
   viewForItem: (item) -> "<li>#{item}</li>"
 
   confirmed: (item) -> @parentView.confirm(item)
+
+  icon: (color) ->
+    if color
+      color = atom.config.get("platformio-ide-terminal.iconColors.#{color}")
+      color = color.toRGBAString()
+    return "<span class='icon icon-terminal' color=#{color}></span>"
