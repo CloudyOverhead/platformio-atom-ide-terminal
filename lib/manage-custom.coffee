@@ -53,11 +53,11 @@ class CustomSelectList extends SelectListView
     commands = "<li>" + item.commands.join("</li><li>") + "</li>"
     """
     <li>
-      #{icon} #{item.name} <br>
+      <b>#{icon} #{item.name} (shortcut: #{item.shortcut})</b><br>
       Commands ran on initialization:
-      <ul>
+      <ul><tt>
         #{commands}
-      </ul>
+      </tt></ul>
     <li>
     """
 
