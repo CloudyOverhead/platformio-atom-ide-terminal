@@ -3,7 +3,7 @@
 
 PlatformIOTerminalView = require './view'
 StatusIcon = require './status-icon'
-ManageCustom = require './manage-custom'
+ManageCustomDialog = require './manage-custom'
 
 os = require 'os'
 path = require 'path'
@@ -27,7 +27,7 @@ class StatusBar extends View
     @subscriptions.add atom.commands.add 'atom-workspace',
       'platformio-ide-terminal:focus': => @focusTerminal()
       'platformio-ide-terminal:new': => @newTerminalView()
-      'platformio-ide-terminal:custom-terminals': => @ManageCustom()
+      'platformio-ide-terminal:custom-terminals': => @manageCustomDialog()
       'platformio-ide-terminal:toggle': => @toggle()
       'platformio-ide-terminal:next': =>
         return unless @activeTerminal
@@ -492,3 +492,11 @@ class StatusBar extends View
     @moveTerminalView fromIndex, toIndex
     icon.addClass 'inserted'
     icon.one 'webkitAnimationEnd', -> icon.removeClass('inserted')
+
+  manageCustomDialog: -> new ManageCustomDialog this
+
+  launchCustomTerminal: (commands, color, name) ->
+    @activeTerminal = @createTerminalView(commands)
+    @activeTerminal = @setStatusColor(color)
+    @activeTerminal = @activeTerminal.statusIcon.updateName name.trim()
+    @activeTerminal.toggle()
