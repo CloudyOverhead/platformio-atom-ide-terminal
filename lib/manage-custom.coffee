@@ -13,19 +13,21 @@ class ManageCustomDialog extends View
   config = []
 
   initialize: (@statusBar) ->
-    @pullConfig()
-    @customList.setItems @config if @config?
     @attach()
     atom.commands.add 'atom-text-editor',
       'core:cancel': => @close()
+
+    @pullConfig()
+    @customList.setItems @config
 
   attach: ->
     @panel = atom.workspace.addModalPanel(item: @element)
     @element.focus()
 
-  confirm: ->
+  confirm: (item) ->
+    @config = @getItems()
     @pushConfig()
-    @statusBar.launchCustomTerminal(@config)
+    @statusBar.launchCustomTerminal(item)
     @close()
 
   close: ->
@@ -48,4 +50,4 @@ class CustomSelectList extends SelectListView
 
   viewForItem: (item) -> "<li>#{item}</li>"
 
-  confirmed: (item) -> @config = @getItems()
+  confirmed: (item) -> @parentView.confirm(item)
