@@ -6,9 +6,9 @@ class ManageCustomDialog extends View
     @div class: 'platformio-ide-terminal-dialog', =>
       @label "Custom Terminals", class: 'icon-pencil', outlet: 'promptText'
       @subview 'customList', new CustomSelectList this
-      @label 'Escape (Esc) to exit', style: 'width: 25%;'
-      @label 'Right click to launch', style: 'width: 25%; text-align: center;'
-      @label 'Left click to edit', style: 'width: 25%; text-align: right;'
+      @label 'Escape (Esc) to exit', style: 'width: 33%;'
+      @label 'Left click to launch', style: 'width: 33%; text-align: center;'
+      @label 'Right click to edit', style: 'width: 34%; text-align: right;'
 
   config = []
 
